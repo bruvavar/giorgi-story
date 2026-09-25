@@ -1,0 +1,88 @@
+HTML
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>გიორგის თავგადასავალი პროგრამებში</title>
+    <style>
+        body {
+            background-color: #0b0b0b;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .terminal {
+            max-width: 600px;
+            width: 100%;
+            background: #141414;
+            border: 1px solid #222;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0,255,102,0.08);
+        }
+        .meta-bar {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 10px;
+        }
+        .story-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #dcdcdc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal">
+        <div class="meta-bar" id="metaBar">სისტემის სკანირება მიმდინარეობს...</div>
+        <div class="story-text" id="storyText">იტვირთება გიორგის სამყარო...</div>
+    </div>
+
+    <script>
+        async function runGiorgiStory() {
+            const metaBar = document.getElementById('metaBar');
+            const storyText = document.getElementById('storyText');
+
+            let isDesktop = window.innerWidth >= 768;
+            let batteryLevel = 100;
+
+            if (!isDesktop && 'getBattery' in navigator) {
+                try {
+                    const battery = await navigator.getBattery();
+                    batteryLevel = Math.round(battery.level * 100);
+                } catch (e) {
+                    batteryLevel = 100;
+                }
+            }
+
+            if (isDesktop) {
+                metaBar.innerText = "მოწყობილობა: კომპიუტერი | სტატუსი: უსასრულო დინამიკა";
+                storyText.innerText = "გიორგი არ ჩერდება. კომპიუტერის ფართო ეკრანზე ის ერთი პროგრამიდან მეორეში ხტება, ფანჯრებს ხსნის და ხურავს, ერთობა და სრული თავისუფლებით ძვრება კოდების ლაბირინთებში — მისთვის გაჩერება არ არსებობს.";
+            } else {
+                metaBar.innerText = `მოწყობილობა: მობილური | ბატარეა: ${batteryLevel}%`;
+
+                if (batteryLevel > 50) {
+                    storyText.innerText = "გიორგი 100%-იანი აზარტით დარბის! მობილურის აპლიკაციებს შორის ისეტი სიჩქარით დაძვრება, დროც კი იბნევა. ერთობა, ტელეფონი ცხელდება, მაგრამ ის წამითაც არ ნელდება.";
+                } else if (batteryLevel === 50) {
+                    storyText.innerText = "ბატარეა ზუსტად შუაზეა — 50%. გიორგის ნაბიჯები ნელდება. მას უკვე ეშინია, რომ ეკრანი ჩაქრება, ამიტომ ფრთხილად, აკვიატებული შიშით გადაადგილდება აპლიკაციიდან აპლიკაციაში.";
+                } else {
+                    storyText.innerText = "კრიტიკული ზონა (50%-ზე დაბლა)! გიორგი ვეღარ მოძრაობს. ის დაბნეული და შეშინებული იჭედება მობილურის ბნელ კუთხეში, მიწისქვეშა ქეშ მეხსიერებაში იმალება და სუნთქვაც კი შეუწყვეტია, რომ სისტემამ ვერ იპოვოს.";
+                }
+            }
+        }
+
+        runGiorgiStory();
+    </script>
+
+</body>
+</html>
